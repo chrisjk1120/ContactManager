@@ -3,7 +3,6 @@ public class menuHandler {
 
     public menuHandler()
     {
-        IO.println("Inside menuhandler");
         Contacts contacts = new Contacts();
         while(true) {
             switch (printMenu()) {
@@ -17,8 +16,9 @@ public class menuHandler {
                     contacts.filter();
                     break;
                 case 4:
-
+                    IO.println("Exiting..");
                     return;
+
 
             }
         }

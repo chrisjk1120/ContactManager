@@ -1,4 +1,5 @@
 package se.lexicon;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -13,9 +14,9 @@ public class Contacts {
     {
         /* Function used for demopurposes so I don't have to enter the data for each test-run */
 
-        this.addPerson("Christoffer 1","christoffer1@gmail.com","12312434234234");
-        this.addPerson("Christoffer 2","ffff@gmail.com","12312434234234");
-        this.addPerson("atestperson1","test@test.com","asdasdasdaasd");
+        this.addPerson("Christoffer 1","christoffer1@gmail.com","047212345");
+        this.addPerson("Christoffer 2","ffff@gmail.com","+4647212345");
+        this.addPerson("atestperson1","test@test.com","047012345");
 
 
     }
@@ -33,19 +34,22 @@ public class Contacts {
         }
     }
 
-    public Person addContact()
-    {
-        String name,email,phonenumber;
+    public void addContact() {
+        String name, email, phonenumber;
         IO.print("Enter name:");
         name = IO.readln();
         IO.print("Enter email:");
         email = IO.readln();
         IO.print("Enter phonenumber:");
-        phonenumber=IO.readln();
+        phonenumber = IO.readln();
+        try {
+            Person person = new Person(name, email, phonenumber);
+            this.contacts.add(person);
+            //return person;
+        } catch (IllegalArgumentException e) {
+            IO.println(e.getMessage());
+        }
 
-        Person person = new Person(name,email,phonenumber);
-        this.contacts.add(person);
-        return person;
     }
 
     public void filter()
@@ -84,7 +88,30 @@ public class Contacts {
 
     private void addPerson(String name, String email, String phonenumber)
     {
-        Person person = new Person(name,email,phonenumber);
-        this.contacts.add(person);
+        // As this method will be used by the upcoming
+        try {
+            Person person = new Person(name, email, phonenumber);
+            this.contacts.add(person);
+        } catch(IllegalArgumentException e) {
+            IO.println("Invalid formatting was passed for either emailaddress or phonenumber");
+        }
     }
+    private void loadStorage() {
+        Storage storage  = new Storage("contacts.csv");
+        // This will throw an exception, as such
+
+    }
+    private void toCsv() {
+        Storage storage = new Storage("contacts.csv");
+        List<String> csvFile = new ArrayList<>();
+        for(Person person : this.contacts)
+        {
+            csvFile.add(person.csvNotation());
+        }
+        storage.flush(csvFile);
+        csvFile=null;
+        storage=null;
+    }
+
+
 }

@@ -9,20 +9,11 @@ public class Person {
         this.name=name;
         this.email=email;
         this.phonenumber=phonenumber;
+        ValidatePerson(); // As we throw an exception if this is not true, this person should not be added.
+
     }
 
-    public Person addPerson(String name, String email, String phonenumber)
-    {
 
-        this.name=name;
-        this.email=email;
-        this.phonenumber=phonenumber;
-        if(ValidatePerson()) {
-            return this;
-        } else {
-            return null;
-        }
-    }
 
     public void printCard()
     {
@@ -36,13 +27,22 @@ public class Person {
     {
 
         if(CommonValidators.isValidEmail(this.email) && CommonValidators.isValidPhoneNumber(this.phonenumber)){
+        //if(CommonValidators.isValidEmail(this.email)){
             return true;
         } else {
-            return false;
+            throw new IllegalArgumentException("ERROR: Invalid format on either email or phonenumber");
+
         }
     }
 public String getName()
 {
     return this.name;
+
 }
+    public String csvNotation(){
+        String csvLine = String.format("%s,%s,%s",this.name,this.email,this.phonenumber);
+        return csvLine;
+    }
 }
+
+
