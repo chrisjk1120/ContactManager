@@ -5,17 +5,23 @@ public class Person {
     String email;
     String phonenumber;
 
-    public void Person(){
-
-
+    public  Person(String name, String email, String phonenumber){
+        this.name=name;
+        this.email=email;
+        this.phonenumber=phonenumber;
     }
 
     public Person addPerson(String name, String email, String phonenumber)
     {
+
         this.name=name;
         this.email=email;
         this.phonenumber=phonenumber;
-        return this;
+        if(ValidatePerson()) {
+            return this;
+        } else {
+            return null;
+        }
     }
 
     public void printCard()
@@ -26,6 +32,14 @@ public class Person {
         IO.println("Phonenumber: " + this.phonenumber);
     }
 
+    private boolean ValidatePerson()
+    {
 
+        if(CommonValidators.isValidEmail(this.email) && CommonValidators.isValidPhoneNumber(this.phonenumber)){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

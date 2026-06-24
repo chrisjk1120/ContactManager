@@ -14,6 +14,7 @@ public class menuHandler {
                     contacts.addContact();
                     break;
                 case 3:
+                    contacts.filter();
                     break;
                 case 4:
 
@@ -30,7 +31,7 @@ public class menuHandler {
         IO.println("========================");
         IO.println("1) List all contacts");
         IO.println("2) Add new contact");
-        IO.println("3) Delete contact");
+        IO.println("3) Search contacts");
         IO.println("4) Exit application");
         IO.println("==========================");
         try {
