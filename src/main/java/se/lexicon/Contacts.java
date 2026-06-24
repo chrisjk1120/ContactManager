@@ -1,8 +1,9 @@
 package se.lexicon;
 import java.util.ArrayList;
-
+import java.util.Comparator;
+import java.util.List;
 public class Contacts {
-    ArrayList<Person> contacts = new ArrayList<>();
+    List<Person> contacts = new ArrayList<>();
 
     public Contacts()
     {
@@ -13,26 +14,22 @@ public class Contacts {
         /* Function used for demopurposes so I don't have to enter the data for each test-run */
 
         this.addPerson("Christoffer 1","christoffer1@gmail.com","12312434234234");
-
-
         this.addPerson("Christoffer 2","ffff@gmail.com","12312434234234");
-
-
-        this.addPerson("testperson1","test@test.com","asdasdasdaasd");
+        this.addPerson("atestperson1","test@test.com","asdasdasdaasd");
 
 
     }
 
     public void listContacts(boolean sorted)
     {
-        if(sorted == false)
+        if(sorted)
         {
-            for(Person person : this.contacts)
-            {
-                person.printCard();
-            }
-        } else {
+            this.contacts.sort(Comparator.comparing(Person::getName,String.CASE_INSENSITIVE_ORDER));
 
+        }
+        for(Person person : this.contacts)
+        {
+            person.printCard();
         }
     }
 

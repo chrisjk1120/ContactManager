@@ -8,7 +8,7 @@ public class menuHandler {
         while(true) {
             switch (printMenu()) {
                 case 1:
-                    contacts.listContacts(false);
+                    contacts.listContacts(true);
                     break;
                 case 2:
                     contacts.addContact();
