@@ -11,7 +11,7 @@ public class Storage {
     String filename ="";
     List<String> lines = new ArrayList<>();
     public Storage(String file) {
-        this.file = file;
+        this.filename = file;
 
     }
 
@@ -25,11 +25,15 @@ public class Storage {
 
     public void flush(List<String> csvLines)
     {
-        Files.write(
-                Path.of(this.filename),
-                lines,
-                StandardOpenOption.CREATE,
-                StandardOpenOption.APPEND
-        );
+        try {
+            Files.write(
+                    Path.of(this.filename),
+                    csvLines,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING // Very ugly way to handle things. But empty the file before writing the objects.
+            );
+        } catch(IOException e) {
+            IO.println("I was not able to save to file: " + this.filename);
+        }
     }
 }

@@ -1,4 +1,5 @@
 package se.lexicon;
+import java.io.IOException;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,14 +11,18 @@ public class Contacts {
     {
         this.Populate();
     }
-    private void Populate()
-    {
-        /* Function used for demopurposes so I don't have to enter the data for each test-run */
-
-        this.addPerson("Christoffer 1","christoffer1@gmail.com","047212345");
-        this.addPerson("Christoffer 2","ffff@gmail.com","+4647212345");
-        this.addPerson("atestperson1","test@test.com","047012345");
-
+    private void Populate()  {
+        /* Trying to read the database. If the file does not exist, populate with demodata and flush */
+        try {
+            loadStorage();
+        } catch(IOException e) {
+            IO.println("Failed loading storage. Populating with demodata");
+            this.addPerson("Christoffer 1", "christoffer1@gmail.com", "047212345");
+            this.addPerson("Christoffer 2", "ffff@gmail.com", "+4647212345");
+            this.addPerson("atestperson1", "test@test.com", "047012345");
+            IO.println("Flushing demodata to file");
+            this.toCsv();
+        }
 
     }
 
@@ -92,23 +97,42 @@ public class Contacts {
         try {
             Person person = new Person(name, email, phonenumber);
             this.contacts.add(person);
+            this.toCsv();
         } catch(IllegalArgumentException e) {
             IO.println("Invalid formatting was passed for either emailaddress or phonenumber");
         }
     }
-    private void loadStorage() {
-        Storage storage  = new Storage("contacts.csv");
-        // This will throw an exception, as such
+    private void loadStorage() throws IOException {
+        Storage storage  = new Storage("e:\\contacts.csv");
+        storage.readFile();// This will throw an exception, as such
+        fromCsv(storage);
+    }
+    private void fromCsv(Storage storage){
+        for(String line : storage.lines){
+            this.contacts.add(parseCsvLine(line));
+        }
+    }
+    private Person parseCsvLine(String line)
+    {
+        Person person = new Person();
+        String[] tmp = line.split(",");
+        person.name=tmp[0];
+        person.email=tmp[1];
+        person.phonenumber=tmp[2];
+        return person;
 
     }
     private void toCsv() {
-        Storage storage = new Storage("contacts.csv");
+        Storage storage = new Storage("e:\\contacts.csv");
         List<String> csvFile = new ArrayList<>();
         for(Person person : this.contacts)
         {
             csvFile.add(person.csvNotation());
         }
-        storage.flush(csvFile);
+
+            storage.flush(csvFile);
+
+
         csvFile=null;
         storage=null;
     }

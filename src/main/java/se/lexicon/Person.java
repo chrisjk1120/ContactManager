@@ -12,6 +12,9 @@ public class Person {
         ValidatePerson(); // As we throw an exception if this is not true, this person should not be added.
 
     }
+    public Person(){
+
+    }
 
 
 
