@@ -5,7 +5,7 @@ public class Person {
     String email;
     String phonenumber;
 
-    public Person Person(String name, String email, String phonenumber){
+    public void Person(){
 
 
     }
@@ -18,7 +18,7 @@ public class Person {
         return this;
     }
 
-    public printCard()
+    public void printCard()
     {
         IO.println("=================");
         IO.println("Name:" + this.name);

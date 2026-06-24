@@ -1,18 +1,25 @@
 package se.lexicon;
 public class menuHandler {
 
-    static void menuHandler()
+    public menuHandler()
     {
-        switch(printMenu){
-            case 1:
+        IO.println("Inside menuhandler");
+        Contacts contacts = new Contacts();
+        while(true) {
+            switch (printMenu()) {
+                case 1:
+                    contacts.listContacts(false);
+                    break;
+                case 2:
+                    contacts.addContact();
+                    break;
+                case 3:
+                    break;
+                case 4:
 
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
+                    return;
+
+            }
         }
     }
     private int printMenu() {
@@ -23,15 +30,17 @@ public class menuHandler {
         IO.println("========================");
         IO.println("1) List all contacts");
         IO.println("2) Add new contact");
-        IO.println("3) Delete contact";
+        IO.println("3) Delete contact");
         IO.println("4) Exit application");
         IO.println("==========================");
         try {
+            IO.print("Your selection:");
             menuSelection = Integer.parseInt(IO.readln());
-            return menuSelection;
         } catch(NumberFormatException e){
             IO.println("The entered value was not an integer, nothing happened.");
         }
+        return menuSelection;
+
     }
 
 }
