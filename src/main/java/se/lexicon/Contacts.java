@@ -48,15 +48,48 @@ public class Contacts {
         IO.print("Enter phonenumber:");
         phonenumber = IO.readln();
         try {
-            Person person = new Person(name, email, phonenumber);
+            Person person = new Person(name, email, phonenumber,this.contacts.size()+1); // this.contacts.size()+1 is an incremental ID for each update to be able to identify object to modify/delete.
             this.contacts.add(person);
+            toCsv(); // As the person was successfully added, flush to file.
             //return person;
         } catch (IllegalArgumentException e) {
             IO.println(e.getMessage());
         }
 
     }
+    public void updateData()
+    {
+        Integer contactId=0;
+        IO.print("Enter Contact#:");
 
+        try {
+            contactId = Integer.parseInt(IO.readln());
+        } catch (NumberFormatException e) {
+            IO.println("That is not an valid number. Aborting.");
+        }
+        if(contactId < this.contacts.size()){
+            IO.println("You are about to update contact: \"" +this.contacts.get(contactId-1).name);
+        }
+        String name,email,phoneNumber;
+        IO.println("New name (Old="+this.contacts.get(contactId-1).name +"):");
+        name = IO.readln();
+        IO.println("New email (Old="+this.contacts.get(contactId-1).email +"): ");
+        email = IO.readln();
+        IO.println("New phonenumber (Old="+this.contacts.get(contactId-1).phonenumber);
+        phoneNumber=IO.readln();
+        this.update(name,email,phoneNumber,contactId);
+        this.toCsv(); // We want to save our changes!
+
+    }
+
+    private void update(String name, String email, String phonenumber,Integer objectId)
+    {
+        Person object = this.contacts.get(objectId-1);
+        if(!name.isEmpty()) { object.name=name; }
+        if(!email.isEmpty()) {object.email=name; }
+        if(!phonenumber.isEmpty()) { object.phonenumber=phonenumber; }
+        this.contacts.set(objectId-1,object);
+    }
     public void filter()
     {
         String searchstring ="";
@@ -95,7 +128,7 @@ public class Contacts {
     {
         // As this method will be used by the upcoming
         try {
-            Person person = new Person(name, email, phonenumber);
+            Person person = new Person(name, email, phonenumber,this.contacts.size()+1);
             this.contacts.add(person);
             this.toCsv();
         } catch(IllegalArgumentException e) {
@@ -119,6 +152,7 @@ public class Contacts {
         person.name=tmp[0];
         person.email=tmp[1];
         person.phonenumber=tmp[2];
+        person.contactId=this.contacts.size()+1; // Counter to keep track of each object.
         return person;
 
     }

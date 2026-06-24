@@ -4,8 +4,9 @@ public class Person {
     String name;
     String email;
     String phonenumber;
+    Integer contactId;
 
-    public  Person(String name, String email, String phonenumber){
+    public  Person(String name, String email, String phonenumber,Integer contactId){
         this.name=name;
         this.email=email;
         this.phonenumber=phonenumber;
@@ -21,6 +22,7 @@ public class Person {
     public void printCard()
     {
         IO.println("=================");
+        IO.println("Contact #:" + this.contactId);
         IO.println("Name:" + this.name);
         IO.println("Email: " + this.email);
         IO.println("Phonenumber: " + this.phonenumber);
