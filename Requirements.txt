@@ -1,0 +1,14 @@
+Functionality:
+
+Each contact should hold:
+* First name
+* Lastname
+* Phonenumber
+* Email-address
+
+
+Structure:
+Contacts
+    Person
+    
+
