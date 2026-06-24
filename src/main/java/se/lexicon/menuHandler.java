@@ -15,11 +15,14 @@ public class menuHandler {
                 case 3:
                     contacts.updateData();
                     break;
-
                 case 4:
+                    contacts.deleteData();
+                    break;
+
+                case 5:
                     contacts.filter();
                     break;
-                case 5:
+                case 6:
                     IO.println("Exiting..");
                     return;
 
@@ -36,8 +39,9 @@ public class menuHandler {
         IO.println("1) List all contacts");
         IO.println("2) Add new contact");
         IO.println("3) Update data for contact");
-        IO.println("4) Search contacts");
-        IO.println("4) Exit application");
+        IO.println("4) Delete contact data");
+        IO.println("5) Search contacts");
+        IO.println("6) Exit application");
         IO.println("==========================");
         try {
             IO.print("Your selection:");

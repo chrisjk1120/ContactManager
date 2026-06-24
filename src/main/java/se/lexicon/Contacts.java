@@ -81,7 +81,30 @@ public class Contacts {
         this.toCsv(); // We want to save our changes!
 
     }
+    public void deleteData()
+    {
+        Integer contactId=0;
+        IO.println("Enter contact ID to remove: ");
+        try {
+            contactId=Integer.parseInt(IO.readln());
 
+        } catch (NumberFormatException e)
+        {
+            IO.println("You did not enter a number!");
+
+        }
+        Person person = this.contacts.get(contactId-1);
+        person.printCard();
+        String confirm="";
+        IO.println("Confirm deletion by writing YES:");
+        confirm=IO.readln();
+        if(confirm.toLowerCase().equals("yes")){
+                this.contacts.remove(contactId-1);
+                this.toCsv(); // Flush new contactlist to file
+                this.contacts.clear(); // Remove all items we have in contacts
+                this.Populate(); // Populate contacts again
+        }
+    }
     private void update(String name, String email, String phonenumber,Integer objectId)
     {
         Person object = this.contacts.get(objectId-1);
